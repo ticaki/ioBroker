@@ -36,11 +36,11 @@ class Pushover extends utils.Adapter {
         if (obj && obj.command === 'send' && obj.message) {
             obj.message && this.processMessage(obj);
         } else
-        if (obj && obj.command === 'glances' && obj.message) {
-            obj.message && this.sendGlances(obj);
-        } else {
-            obj.callback && this.sendTo(obj.from, 'send', { error: 'Unsupported' }, obj.callback);
-        }
+            if (obj && obj.command === 'glances' && obj.message) {
+                obj.message && this.sendGlances(obj);
+            } else {
+                obj.callback && this.sendTo(obj.from, 'send', { error: 'Unsupported' }, obj.callback);
+            }
     }
 
     processMessage(obj) {
@@ -170,6 +170,7 @@ class Pushover extends utils.Adapter {
         }
 
         if (!this.pushover) {
+            callback && callback('Cannot send notification while not configured');
             return;
         }
 
